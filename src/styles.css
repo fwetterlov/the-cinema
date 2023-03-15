@@ -3,7 +3,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #b5cab9;
+  background-color: #b5caca;
 }
 
 * {
@@ -58,7 +58,7 @@ body {
   padding: .25rem;
 }
 
-.nav li.active {
+.menu.active {
   background-color: #555;
 }
 
