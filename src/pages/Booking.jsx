@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 export default function Booking() {
   const { movieID, date } = useParams();

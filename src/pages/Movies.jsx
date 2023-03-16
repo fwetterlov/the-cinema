@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import DisplayMovieCard from "../DisplayMovieCard";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -23,10 +24,6 @@ export default function Movies() {
 
   function handleCategoryChange(event) {
     setSelectedCategory(event.target.value);
-  }
-
-  function handleMovieCardClick(movie, date) {
-    setSelectedScreening({ movie, date });
   }
 
   function getUniqueCategories(movies) {
@@ -92,15 +89,7 @@ export default function Movies() {
               {screeningsForDate.map(({ id, time, movieId, auditoriumId }) => {
                 const movie = movies.find(movie => movie.id === movieId);
                 return (
-                  <Link to={`/booking/${id}/${date}`} style={{ textDecoration: 'none', color: 'inherit' }} className="movie-card" onClick={() => handleMovieCardClick(movie, date)}>
-                    <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
-                    <div className="movie-info">
-                      <h3>{movie.title}</h3>
-                      <p>{`${Math.floor(movie.description.length / 60)}h ${movie.description.length % 60}min`}</p>
-                      <p>{new Date(time).toLocaleTimeString('sv-SV').substring(0, 5)}</p>
-                      <p>Auditorium {auditoriumId}</p>
-                    </div>
-                  </Link>
+                  <DisplayMovieCard key={id} id={movieId} date={date} movies={movies} movie={movie} time={time} auditoriumId={auditoriumId} />
                 );
               })}
             </div>
