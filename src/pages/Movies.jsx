@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [screenings, setScreenings] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
@@ -16,70 +16,97 @@ export default function Movies() {
     })();
   }, []);
 
-  useEffect(() => {
-    const allCategories = movies.reduce((categories, movie) => {
-      movie.description.categories.forEach(category => {
+  const uniqueCategories = getUniqueCategories(movies);
+  const filteredMovies = movies.filter((movie) => {
+    return (selectedCategory === '' || movie.description.categories.includes(selectedCategory))
+  });
+
+  function handleCategoryChange(event) {
+    setSelectedCategory(event.target.value);
+  }
+
+  function handleMovieCardClick(movie, date) {
+    setSelectedScreening({ movie, date });
+  }
+
+  function getUniqueCategories(movies) {
+    const categories = [];
+
+    movies.forEach((movie) => {
+      movie.description.categories.forEach((category) => {
         if (!categories.includes(category)) {
           categories.push(category);
         }
       });
-      return categories;
-    }, []);
+    });
 
-    setCategories(allCategories);
-  }, [movies]);
+    return categories;
+  }
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const formatDate = (date) => {
+  function formatDate(date) {
     return new Date(date).toLocaleDateString('en-EN', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-  };
+  }
 
-  const groupedScreenings = screenings.reduce((acc, screening) => {
-    const date = formatDate(screening.time);
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(screening);
-    return acc;
-  }, {});
+  function groupScreeningsByDate(screenings) {
+    const groupedScreenings = screenings.reduce((acc, screening) => {
+      const date = formatDate(screening.time);
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(screening);
+      return acc;
+    }, {});
+    return groupedScreenings;
+  }
+
+  const groupedScreenings = groupScreeningsByDate(screenings);
 
   return (
     <div>
-      <select value={selectedCategory} onChange={handleCategoryChange}>
+      <label htmlFor="category-select">Select a category: </label>
+      <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
         <option value="">All Categories</option>
-        {categories.map(category => (
-          <option key={category} value={category}>{category}</option>
-        ))}
+        {uniqueCategories.map((category) => {
+          return <option key={category} value={category}>{category}</option>;
+        })}
       </select>
-      {Object.keys(groupedScreenings).map((date) => (
-        <div key={date} className="date">
-          <h2>{date}</h2>
-          <div className="movie-cards">
-            {groupedScreenings[date].map(({ id, time, movieId, auditoriumId }) => {
-              const movie = movies.find(movie => movie.id === movieId);
-              return (
-                <div key={id} className="movie-card" onClick={() => console.log(movie, date)}>
-                  <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
-                  <div className="movie-info">
-                    <h3>{movie.title}</h3>
-                    <p>{`${Math.floor(movie.description.length / 60)}h ${movie.description.length % 60}min`}</p>
-                    <p>{new Date(time).toLocaleTimeString('sv-SV').substring(0, 5)}</p>
-                    <p>Auditorium {auditoriumId}</p>
-                  </div>
-                </div>
-              );
-            })}
+      {Object.keys(groupedScreenings).map((date) => {
+        const screeningsForDate = groupedScreenings[date].filter(({ movieId }) => {
+          const movie = movies.find(movie => movie.id === movieId);
+          return filteredMovies.includes(movie);
+        });
+
+        if (screeningsForDate.length === 0) {
+          return null;
+        }
+
+        return (
+          <div key={date} className="date">
+            <h2>{date}</h2>
+            <div className="movie-cards">
+              {screeningsForDate.map(({ id, time, movieId, auditoriumId }) => {
+                const movie = movies.find(movie => movie.id === movieId);
+                return (
+                  <Link to={`/booking/${id}/${date}`} style={{ textDecoration: 'none', color: 'inherit' }} className="movie-card" onClick={() => handleMovieCardClick(movie, date)}>
+                    <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
+                    <div className="movie-info">
+                      <h3>{movie.title}</h3>
+                      <p>{`${Math.floor(movie.description.length / 60)}h ${movie.description.length % 60}min`}</p>
+                      <p>{new Date(time).toLocaleTimeString('sv-SV').substring(0, 5)}</p>
+                      <p>Auditorium {auditoriumId}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
