@@ -6,14 +6,13 @@ export default function DisplayMovieCard(props) {
   let { screeningID, movieID, date, movie, time, auditoriumId } = props;
 
   function handleCardClick() {
-    console.log(movie.title, movieID, screeningID)
-    navigate("/booking", { state: { screeningID: screeningID, movieID: movieID, movieTitle: movie.title, date: date, auditoriumId: auditoriumId } })
+    navigate("/selecttickets", { state: { screeningID: screeningID, movieID: movieID, movieTitle: movie.title, moviePoster: movie.description.posterImage, date: date, auditoriumId: auditoriumId } })
   }
 
   return (
     <div onClick={handleCardClick}>
       <Link key={`${movieID}-${date}`} to={{
-        pathname: `/booking`
+        pathname: `/selecttickets`
       }} style={{ textDecoration: 'none', color: 'inherit' }} className="movie-card">
         <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
         <div className="movie-info">

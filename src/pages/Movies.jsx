@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import DisplayMovieCard from "../DisplayMovieCard";
 
 export default function Movies() {
@@ -99,16 +98,3 @@ export default function Movies() {
     </div>
   );
 }
-
-/*
-<div className="card-container">
-      {movies.map(movie => (
-        <div key={movie.id} className="card">
-          <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
-          <div className="card-body">
-            <h2 className="card-title">{movie.title}</h2>
-            <p className="card-text">{movie.description.categories.join(', ')}</p>
-          </div>
-        </div>
-      ))}
-    </div>*/
