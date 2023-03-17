@@ -89,7 +89,7 @@ export default function Movies() {
               {screeningsForDate.map(({ id, time, movieId, auditoriumId }) => {
                 const movie = movies.find(movie => movie.id === movieId);
                 return (
-                  <DisplayMovieCard key={id} id={movieId} date={date} movies={movies} movie={movie} time={time} auditoriumId={auditoriumId} />
+                  <DisplayMovieCard key={id} screeningID={id} movieID={movieId} date={date} movies={movies} movie={movie} time={time} auditoriumId={auditoriumId} />
                 );
               })}
             </div>

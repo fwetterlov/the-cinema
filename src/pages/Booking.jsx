@@ -1,11 +1,13 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Booking() {
-  const { movieID, date } = useParams();
+  const location = useLocation();
+  console.log('location', location)
 
   return (
     <div>
-      <h2>Booking for Movie ID {movieID} on {date}</h2>
+      <h2>Booking for Screening ID {location.state.screeningID} on {location.state.date}</h2>
+      <h4>Movie id {location.state.movieID}, movietitle = {location.state.movieTitle} in auditorium {location.state.auditoriumId}</h4>
     </div>
   );
 }
