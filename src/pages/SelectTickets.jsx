@@ -27,8 +27,7 @@ export default function SelectTickets() {
   // handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(normalTickets, seniorTickets, childrenTickets)
-    navigate("/selectseats")
+    navigate("/selectseats", { state: { screeningID: screeningID, normalTickets: normalTickets, seniorTickets: seniorTickets, childrenTickets: childrenTickets } })
   };
 
   return (
