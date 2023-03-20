@@ -32,47 +32,51 @@ export default function SelectTickets() {
   };
 
   return (
-    <Container fluid="mg">
-      <Card className="ticket-card">
-        <Card.Header as="h2" bg="light" className="m-0">{movieTitle}</Card.Header>
-        <Card.Body>
-          <Card.Text>{date} in Auditorium {auditoriumId}</Card.Text>
-          <Card.Title as="h3">Ticket Selection:</Card.Title>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="ticket-category">
-              <Form.Label htmlFor="normalTickets">Normal:</Form.Label>
-              <Form.Control
-                type="number"
-                id="normalTickets"
-                name="normalTickets"
-                value={normalTickets}
-                onChange={handleNormalTicketsChange}
-              />
-            </Form.Group>
-            <Form.Group className="ticket-category">
-              <Form.Label htmlFor="seniorTickets">Senior:</Form.Label>
-              <Form.Control
-                type="number"
-                id="seniorTickets"
-                name="seniorTickets"
-                value={seniorTickets}
-                onChange={handleSeniorTicketsChange}
-              />
-            </Form.Group>
-            <Form.Group className="ticket-category">
-              <Form.Label htmlFor="childrenTickets">Children:</Form.Label>
-              <Form.Control
-                type="number"
-                id="childrenTickets"
-                name="childrenTickets"
-                value={childrenTickets}
-                onChange={handleChildrenTicketsChange}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">Confirm Tickets</Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+    <Card className="ticket-card">
+      <Card.Title as="h2">{movieTitle}</Card.Title>
+      <Card.Body>
+        <Card.Text>{date} in Auditorium {auditoriumId}</Card.Text>
+        <Card.Title as="h3">Ticket Selection:</Card.Title>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="ticket-category">
+            <Form.Label htmlFor="normalTickets">Normal:</Form.Label>
+            <Form.Control
+              type="number"
+              id="normalTickets"
+              name="normalTickets"
+              value={normalTickets}
+              onChange={handleNormalTicketsChange}
+              max={10}
+              min={0}
+            />
+          </Form.Group>
+          <Form.Group className="ticket-category">
+            <Form.Label htmlFor="seniorTickets">Senior:</Form.Label>
+            <Form.Control
+              type="number"
+              id="seniorTickets"
+              name="seniorTickets"
+              value={seniorTickets}
+              onChange={handleSeniorTicketsChange}
+              max={10}
+              min={0}
+            />
+          </Form.Group>
+          <Form.Group className="ticket-category">
+            <Form.Label htmlFor="childrenTickets">Children:</Form.Label>
+            <Form.Control
+              type="number"
+              id="childrenTickets"
+              name="childrenTickets"
+              value={childrenTickets}
+              onChange={handleChildrenTicketsChange}
+              max={10}
+              min={0}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">Confirm Tickets</Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
