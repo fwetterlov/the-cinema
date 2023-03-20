@@ -10,7 +10,8 @@ export default function SelectSeats(props) {
   const totalTickets = normalTickets + seniorTickets + childrenTickets;
   const navigate = useNavigate();
 
-  const [selectedSeats, setSelectedSeats] = useState('');
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedRow, setSelectedRow] = useState('');
 
   const s = useStates({
     screening: null,
@@ -22,6 +23,7 @@ export default function SelectSeats(props) {
     event.preventDefault();
     navigate("/receipt", {
       state: {
+        selectedRow: selectedRow,
         selectedSeats: selectedSeats,
         screeningID: screeningID,
         normalTickets: normalTickets,
@@ -81,51 +83,70 @@ export default function SelectSeats(props) {
 
 
   function toggleSeatSelection(seat) {
-    console.log(selectedSeats)
-    // do nothing if occupied
-    if (seat.occupied) { return; }
-    if (!seat.selected && selectedSeats.length === totalTickets) { return; }
 
-    seat.selected = !seat.selected;
+    console.log(selectedSeats.length)
+    // do nothing if occupied
+    if (seat.occupied) {
+      console.log("1")
+      return;
+    }
+    if (selectedSeats.length > 1 && !(selectedSeats.includes(parseInt(seat.seatNumber) + 1) || selectedSeats.includes(parseInt(seat.seatNumber) - 1))) {
+      console.log("2")
+      return;
+    }
+    if (!seat.selected && selectedSeats.length === totalTickets) {
+      console.log("3")
+      return;
+    }
+
+    setSelectedRow(seat.rowNumber);
 
     setSelectedSeats(prevSeats => {
       const index = prevSeats.indexOf(seat.seatNumber);
+
       if (index > -1 && !seat.selected) {
         return prevSeats.filter(num => num !== seat.seatNumber);
       }
+
       if (index === -1 && seat.selected) {
         return [...prevSeats, seat.seatNumber];
       }
+
       return prevSeats;
     });
+
+    // update seat selection state
+    seat.selected = !seat.selected;
   }
 
   // output the seats
-  return s.seats.length === 0 ? null : <div className="screening-and-seats">
-    <h1>{s.screening.movie}</h1>
-    <h2>{new Intl.DateTimeFormat('en-EN', {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    }).format(new Date(s.screening.screeningTime))}</h2>
-    <img
-      className="poster-screen"
-      src={'https://cinema-rest.nodehill.se' + s.movie.description.posterImage} />
-    <div className="seats">
-      {s.seats.map(row => <><div className="row">
-        {row.map((seat) => <div
-          key={seat.seatNumber}
-          className={
-            (seat.selected ? 'selected' : '')
-            + (seat.occupied ? ' occupied' : '')
-          }
-          onClick={() => toggleSeatSelection(seat)}>{seat.seatNumber}
-        </div>)}
-      </div><br /></>)}
+  return (
+    s.seats.length === 0 ? null : <div className="screening-and-seats">
+      <h1>{s.screening.movie}</h1>
+      <h2>{new Intl.DateTimeFormat('en-EN', {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      }).format(new Date(s.screening.screeningTime))}</h2>
+      <img
+        className="poster-screen"
+        src={'https://cinema-rest.nodehill.se' + s.movie.description.posterImage} />
+      <div className="seats">
+        {s.seats.map(row => <><div className="row">
+          {row.map((seat) => <div
+            key={seat.seatNumber}
+            className={
+              (seat.selected ? 'selected' : '')
+              + (seat.occupied ? ' occupied' : '')
+            }
+            onClick={() => toggleSeatSelection(seat)}>{seat.seatNumber}
+          </div>)}
+        </div><br /></>)}
+      </div>
+      <button type="submit" onClick={handleConfirmSeats}>Confirm Seats</button>
     </div>
-    <button type="submit" onClick={handleConfirmSeats}>Confirm Seats</button>
-  </div>;
+  );
 }

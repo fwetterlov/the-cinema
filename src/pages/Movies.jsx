@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DisplayMovieCard from "../DisplayMovieCard";
+import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -64,7 +65,6 @@ export default function Movies() {
 
   return (
     <div>
-      <label htmlFor="category-select">Select a category: </label>
       <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
         <option value="">All Categories</option>
         {uniqueCategories.map((category) => {
@@ -84,14 +84,18 @@ export default function Movies() {
         return (
           <div key={date} className="date">
             <h2>{date}</h2>
-            <div className="movie-cards">
-              {screeningsForDate.map(({ id, time, movieId, auditoriumId }) => {
-                const movie = movies.find(movie => movie.id === movieId);
-                return (
-                  <DisplayMovieCard key={id} screeningID={id} movieID={movieId} date={date} movies={movies} movie={movie} time={time} auditoriumId={auditoriumId} />
-                );
-              })}
-            </div>
+            <Container fluid>
+              <Row className="movie-cards">
+                {screeningsForDate.map(({ id, time, movieId, auditoriumId }) => {
+                  const movie = movies.find(movie => movie.id === movieId);
+                  return (
+                    <Col className="column" key={id} xs={12} md={4} lg={3} xl={2}>
+                      <DisplayMovieCard screeningID={id} movieID={movieId} date={date} movies={movies} movie={movie} time={time} auditoriumId={auditoriumId} />
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Container>
           </div>
         );
       })}

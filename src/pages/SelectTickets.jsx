@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Card, Form, Button, Container } from 'react-bootstrap';
 
 export default function SelectTickets() {
   const navigate = useNavigate();
@@ -31,44 +32,47 @@ export default function SelectTickets() {
   };
 
   return (
-    <div className="ticket-card">
-      <h2>{movieTitle}</h2>
-      <img src={`https://cinema-rest.nodehill.se${moviePoster}`} alt={movieTitle} />
-      <p>{date} in Auditorium {auditoriumId}</p>
-      <h3>Ticket Selection:</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="ticket-category">
-          <label htmlFor="normalTickets">Normal:</label>
-          <input
-            type="number"
-            id="normalTickets"
-            name="normalTickets"
-            value={normalTickets}
-            onChange={handleNormalTicketsChange}
-          />
-        </div>
-        <div className="ticket-category">
-          <label htmlFor="seniorTickets">Senior:</label>
-          <input
-            type="number"
-            id="seniorTickets"
-            name="seniorTickets"
-            value={seniorTickets}
-            onChange={handleSeniorTicketsChange}
-          />
-        </div>
-        <div className="ticket-category">
-          <label htmlFor="childrenTickets">Children:</label>
-          <input
-            type="number"
-            id="childrenTickets"
-            name="childrenTickets"
-            value={childrenTickets}
-            onChange={handleChildrenTicketsChange}
-          />
-        </div>
-        <button type="submit">Confirm Tickets</button>
-      </form>
-    </div>
+    <Container fluid="mg">
+      <Card className="ticket-card">
+        <Card.Header as="h2" bg="light" className="m-0">{movieTitle}</Card.Header>
+        <Card.Body>
+          <Card.Text>{date} in Auditorium {auditoriumId}</Card.Text>
+          <Card.Title as="h3">Ticket Selection:</Card.Title>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="ticket-category">
+              <Form.Label htmlFor="normalTickets">Normal:</Form.Label>
+              <Form.Control
+                type="number"
+                id="normalTickets"
+                name="normalTickets"
+                value={normalTickets}
+                onChange={handleNormalTicketsChange}
+              />
+            </Form.Group>
+            <Form.Group className="ticket-category">
+              <Form.Label htmlFor="seniorTickets">Senior:</Form.Label>
+              <Form.Control
+                type="number"
+                id="seniorTickets"
+                name="seniorTickets"
+                value={seniorTickets}
+                onChange={handleSeniorTicketsChange}
+              />
+            </Form.Group>
+            <Form.Group className="ticket-category">
+              <Form.Label htmlFor="childrenTickets">Children:</Form.Label>
+              <Form.Control
+                type="number"
+                id="childrenTickets"
+                name="childrenTickets"
+                value={childrenTickets}
+                onChange={handleChildrenTicketsChange}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">Confirm Tickets</Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }

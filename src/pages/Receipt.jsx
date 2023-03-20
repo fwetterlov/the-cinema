@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 export default function Receipt() {
 
   const { state } = useLocation();
-  const { selectedSeats, screeningID, normalTickets, seniorTickets, childrenTickets, date, movieTitle, auditoriumId } = state;
+  const { selectedRow, selectedSeats, screeningID, normalTickets, seniorTickets, childrenTickets, date, movieTitle, auditoriumId } = state;
 
   function generateBookingNumber() {
     let no = '';
@@ -22,10 +22,11 @@ export default function Receipt() {
     <div className="receipt">
       <h1>Thank you for your purchase!</h1>
       <div className="receipt-info">
-        <div className="movie-info">
+        <div className="movie-details">
           <h2>{movieTitle}</h2>
           <p>Date: {date}</p>
           <p>Auditorium: {auditoriumId}</p>
+          <p>Row: {selectedRow}</p>
           <p>Selected seats: {selectedSeats.join(", ")}</p>
         </div>
         <div className="ticket-info">

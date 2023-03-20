@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 
 export default function DisplayMovieCard(props) {
 
@@ -13,14 +14,16 @@ export default function DisplayMovieCard(props) {
     <div onClick={handleCardClick}>
       <Link key={`${movieID}-${date}`} to={{
         pathname: `/selecttickets`
-      }} style={{ textDecoration: 'none', color: 'inherit' }} className="movie-card">
-        <img src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
-        <div className="movie-info">
-          <h3>{movie.title}</h3>
-          <p>{`${Math.floor(movie.description.length / 60)}h ${movie.description.length % 60}min`}</p>
-          <p>{new Date(time).toLocaleTimeString('sv-SV').substring(0, 5)}</p>
-          <p>Auditorium {auditoriumId}</p>
-        </div>
+      }} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Card className="movie-card">
+          <Card.Img variant="top" src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
+          <Card.Body className="movie-info">
+            <Card.Title>{movie.title}</Card.Title>
+            <Card.Text>{`${Math.floor(movie.description.length / 60)}h ${movie.description.length % 60}min`}</Card.Text>
+            <Card.Text>{new Date(time).toLocaleTimeString('sv-SV').substring(0, 5)}</Card.Text>
+            <Card.Text>Auditorium {auditoriumId}</Card.Text>
+          </Card.Body>
+        </Card>
       </Link>
     </div>
   );

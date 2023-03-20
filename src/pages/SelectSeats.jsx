@@ -7,7 +7,7 @@ export default function SelectSeats() {
   const { screeningID, normalTickets, seniorTickets, childrenTickets, date, movieTitle, auditoriumId } = state;
 
   return (
-    <DisplaySeats key={`${screeningID}-${date}`} screeningID={screeningID} normalTickets={normalTickets} seniorTickets={seniorTickets} childrenTickets={childrenTickets} date={date} movieTitle={movieTitle} auditoriumId={auditoriumId} />
+    <DisplaySeats screeningID={screeningID} normalTickets={normalTickets} seniorTickets={seniorTickets} childrenTickets={childrenTickets} date={date} movieTitle={movieTitle} auditoriumId={auditoriumId} />
   );
 
 }

@@ -7,6 +7,7 @@ import SelectSeats from './pages/SelectSeats'
 import Receipt from './pages/Receipt'
 import './styles.css'
 import { Route, Routes } from "react-router-dom"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
