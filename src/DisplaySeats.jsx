@@ -1,15 +1,38 @@
 import { useEffect } from 'react';
 import { useStates } from './utilities/states';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SelectSeats(props) {
 
-  let { screeningID } = props;
+  let { screeningID, normalTickets, seniorTickets, childrenTickets, date, movieTitle, auditoriumId } = props;
+  const totalTickets = normalTickets + seniorTickets + childrenTickets;
+  const navigate = useNavigate();
+
+  const [selectedSeats, setSelectedSeats] = useState('');
 
   const s = useStates({
     screening: null,
     movie: null,
     seats: []
   });
+
+  const handleConfirmSeats = (event) => {
+    event.preventDefault();
+    navigate("/receipt", {
+      state: {
+        selectedSeats: selectedSeats,
+        screeningID: screeningID,
+        normalTickets: normalTickets,
+        seniorTickets: seniorTickets,
+        childrenTickets: childrenTickets,
+        date: date,
+        movieTitle: movieTitle,
+        auditoriumId: auditoriumId
+      }
+    })
+  };
 
   useEffect(() => {
     (async () => {
@@ -56,11 +79,25 @@ export default function SelectSeats(props) {
     })();
   }, []);
 
+
   function toggleSeatSelection(seat) {
+    console.log(selectedSeats)
     // do nothing if occupied
     if (seat.occupied) { return; }
-    // select if not selected, deselect if selected
+    if (!seat.selected && selectedSeats.length === totalTickets) { return; }
+
     seat.selected = !seat.selected;
+
+    setSelectedSeats(prevSeats => {
+      const index = prevSeats.indexOf(seat.seatNumber);
+      if (index > -1 && !seat.selected) {
+        return prevSeats.filter(num => num !== seat.seatNumber);
+      }
+      if (index === -1 && seat.selected) {
+        return [...prevSeats, seat.seatNumber];
+      }
+      return prevSeats;
+    });
   }
 
   // output the seats
@@ -79,13 +116,16 @@ export default function SelectSeats(props) {
       src={'https://cinema-rest.nodehill.se' + s.movie.description.posterImage} />
     <div className="seats">
       {s.seats.map(row => <><div className="row">
-        {row.map((seat) => <div className={
-          (seat.selected ? 'selected' : '')
-          + (seat.occupied ? ' occupied' : '')
-        }
+        {row.map((seat) => <div
+          key={seat.seatNumber}
+          className={
+            (seat.selected ? 'selected' : '')
+            + (seat.occupied ? ' occupied' : '')
+          }
           onClick={() => toggleSeatSelection(seat)}>{seat.seatNumber}
         </div>)}
       </div><br /></>)}
     </div>
+    <button type="submit" onClick={handleConfirmSeats}>Confirm Seats</button>
   </div>;
 }

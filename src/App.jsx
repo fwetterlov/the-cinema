@@ -4,6 +4,7 @@ import Movies from './pages/Movies'
 import Contact from './pages/Contact'
 import SelectTickets from './pages/SelectTickets'
 import SelectSeats from './pages/SelectSeats'
+import Receipt from './pages/Receipt'
 import './styles.css'
 import { Route, Routes } from "react-router-dom"
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/selecttickets" element={<SelectTickets />} />
           <Route path="/selectseats" element={<SelectSeats />} />
+          <Route path="/receipt" element={<Receipt />} />
         </Routes>
       </div>
     </>

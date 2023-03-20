@@ -160,3 +160,69 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
 }
+
+.receipt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.receipt h1 {
+  margin-bottom: 50px;
+}
+
+.receipt-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.movie-info {
+  text-align: left;
+}
+
+.ticket-info {
+  text-align: right;
+}
+
+.ticket-info h2 {
+  margin-top: 0;
+}
+
+.ticket-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ticket-info li {
+  margin-bottom: 10px;
+}
+
+.ticket-info h3 {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.ticket-info p {
+  margin-bottom: 10px;
+}
+
+.ticket-info p:last-child {
+  margin-bottom: 0;
+}
+
+.ticket-info p:first-child {
+  margin-top: 0;
+}
+
+.ticket-info p:nth-child(2) {
+  margin-top: 0;
+}
+
+.ticket-info p:nth-child(3) {
+  margin-top: 0;
+}

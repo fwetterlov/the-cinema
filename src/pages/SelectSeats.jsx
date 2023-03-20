@@ -4,12 +4,10 @@ import DisplaySeats from '../DisplaySeats'
 export default function SelectSeats() {
 
   const { state } = useLocation();
-  const { screeningID, normalTickets, seniorTickets, childrenTickets } = state;
-  const id = screeningID;
-  console.log("normalTickets: " + normalTickets, "seniorTickets: " + seniorTickets, "childrenTickets: " + childrenTickets)
+  const { screeningID, normalTickets, seniorTickets, childrenTickets, date, movieTitle, auditoriumId } = state;
 
   return (
-    <DisplaySeats key={id} screeningID={id} />
+    <DisplaySeats key={`${screeningID}-${date}`} screeningID={screeningID} normalTickets={normalTickets} seniorTickets={seniorTickets} childrenTickets={childrenTickets} date={date} movieTitle={movieTitle} auditoriumId={auditoriumId} />
   );
 
 }

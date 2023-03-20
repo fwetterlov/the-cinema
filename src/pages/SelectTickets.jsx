@@ -27,7 +27,7 @@ export default function SelectTickets() {
   // handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/selectseats", { state: { screeningID: screeningID, normalTickets: normalTickets, seniorTickets: seniorTickets, childrenTickets: childrenTickets } })
+    navigate("/selectseats", { state: { screeningID, normalTickets: normalTickets, seniorTickets: seniorTickets, childrenTickets: childrenTickets, date: date, movieTitle: movieTitle, auditoriumId: auditoriumId } })
   };
 
   return (
@@ -67,7 +67,7 @@ export default function SelectTickets() {
             onChange={handleChildrenTicketsChange}
           />
         </div>
-        <button type="submit">Confirm Seats</button>
+        <button type="submit">Confirm Tickets</button>
       </form>
     </div>
   );
