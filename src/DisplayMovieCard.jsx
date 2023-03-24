@@ -15,7 +15,7 @@ export default function DisplayMovieCard(props) {
       <Link key={`${movieID}-${date}`} to={{
         pathname: `/selecttickets`
       }} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Card className="movie-card">
+        <Card className="movie-card" >
           <Card.Img variant="top" src={`https://cinema-rest.nodehill.se${movie.description.posterImage}`} alt={movie.title} />
           <Card.Body className="movie-info">
             <Card.Title>{movie.title}</Card.Title>

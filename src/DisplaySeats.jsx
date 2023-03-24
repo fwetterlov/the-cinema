@@ -83,19 +83,14 @@ export default function SelectSeats(props) {
 
 
   function toggleSeatSelection(seat) {
-
-    console.log(selectedSeats.length)
     // do nothing if occupied
     if (seat.occupied) {
-      console.log("1")
       return;
     }
     if (selectedSeats.length > 1 && !(selectedSeats.includes(parseInt(seat.seatNumber) + 1) || selectedSeats.includes(parseInt(seat.seatNumber) - 1))) {
-      console.log("2")
       return;
     }
     if (!seat.selected && selectedSeats.length === totalTickets) {
-      console.log("3")
       return;
     }
 
