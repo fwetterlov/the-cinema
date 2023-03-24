@@ -146,7 +146,7 @@ export default function SelectSeats(props) {
           </div>)}
         </div><br /></>)}
       </div>
-      <button type="submit" onClick={handleConfirmSeats}>Confirm Seats</button>
+      <button id="confirm-button" type="submit" onClick={handleConfirmSeats}>Confirm Seats</button>
     </div>
   );
 }

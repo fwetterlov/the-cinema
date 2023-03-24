@@ -32,7 +32,7 @@ export default function SelectTickets() {
   };
 
   return (
-    <Card className="ticket-card">
+    <Card className="ticket-card" style={{ border: '1px solid black' }}>
       <Card.Title as="h2">{movieTitle}</Card.Title>
       <Card.Body>
         <Card.Text>{date} in Auditorium {auditoriumId}</Card.Text>
@@ -74,7 +74,7 @@ export default function SelectTickets() {
               min={0}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">Confirm Tickets</Button>
+          <Button id="confirm-button" type="submit">Confirm Tickets</Button>
         </Form>
       </Card.Body>
     </Card>
